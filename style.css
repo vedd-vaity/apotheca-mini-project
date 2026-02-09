@@ -1,0 +1,70 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+h1,
+h2,
+h3 {
+    color: #1a237e;
+}
+
+aside {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+aside li {
+    margin: 8px 0;
+}
+
+aside li:hover {
+    color: #0d47a1;
+}
+
+.medicine-card {
+    width: 160px;
+    padding: 10px;
+    margin: 10px;
+    display: inline-block;
+    text-align: center;
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.medicine-card img {
+    width: 120px;
+    height: 120px;
+}
+
+.offer-box {
+    margin: 20px 0;
+    padding: 15px;
+    background: lightgreen;
+    font-size: 20px;
+    text-align: center;
+    animation: glow 1s infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 5px green;
+    }
+    to {
+        box-shadow: 0 0 20px green;
+    }
+}
+
+footer {
+    background: #e3f2fd;
+    padding: 10px;
+    text-align: center;
+}
+
+.categories {
+    border: 5px solid lightblue;
+    background-color: lightblue;
+}
