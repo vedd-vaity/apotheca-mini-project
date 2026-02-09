@@ -1,6 +1,136 @@
-<html>
-  <head><title>Apotheca</title></head>
-  <body>
-    
-  </body>
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Medicine Inventory Management System</title>
+
+        <!-- Internal CSS: Navigation -->
+        <style>
+            nav ul {
+                list-style: none;
+                padding: 0;
+            }
+
+            nav ul li {
+                display: inline-block;
+                margin-right: 15px;
+            }
+
+            nav ul li a {
+                text-decoration: none;
+                color: #1565c0;
+                padding: 6px 12px;
+            }
+
+            nav ul li a:hover {
+                background-color: #bbdefb;
+            }
+        </style>
+
+        <!-- External CSS -->
+        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="nav.css" />
+        <link rel="stylesheet" href="layout.css" />
+    </head>
+    <body>
+        <!-- Task 1: Inline CSS -->
+        <header
+            style="
+                background-color: #e3f2fd;
+                padding: 20px;
+                border: 2px solid #2196f3;
+            "
+        >
+            <h1 style="color: #0d47a1">Medicine Inventory Management System</h1>
+            <p style="text-align: center">
+                Managing medicines efficiently and safely
+            </p>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="medicine.html">Medicines</a></li>
+                <li><a href="registration-form.html">Login</a></li>
+                <li><a href="#">Stock</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+
+        <div class="container">
+            <aside>
+                <h3>Top Categories</h3>
+                <ol>
+                    <li class="categories"><b>Tablets</b></li>
+                    <li class="categories"><><i>Syrups</i></li>
+                    <li class="categories"><><mark>Injections</mark></li>
+                </ol>
+
+                <h3>Medicine Types</h3>
+                <ul>
+                    <li>Antibiotics</li>
+                    <li>Painkillers</li>
+                    <li>Vitamins</li>
+                </ul>
+
+                <h3>Packaging</h3>
+                <dl>
+                    <dt>Strip</dt>
+                    <dd>Foil-packed tablets</dd>
+                    <dt>Bottle</dt>
+                    <dd>Liquid medicines</dd>
+                </dl>
+            </aside>
+
+            <main>
+                <section>
+                    <h2>Featured Medicines</h2>
+
+                    <div class="medicine-card">
+                        <img
+                            src="https://www.mccabespharmacy.com/cdn/shop/files/PfizerParacetamol500mgFilmCoatedTablets24Pack.jpg?v=1704467734&width=2000"
+                            alt="Paracetamol"
+                        />
+                        <p>Paracetamol</p>
+                    </div>
+
+                    <div class="medicine-card">
+                        <img
+                            src=" https://www.biovea.com/in/images/products/xlrg/16459_z.jpg"
+                            alt="Ibuprofen"
+                        />
+                        <p>Ibuprofen</p>
+                    </div>
+
+                    <div class="medicine-card">
+                        <img
+                            src="https://drweightmans.com/wp-content/uploads/2025/05/WhatsApp-Image-2025-08-15-at-7.17.21-PM-1.jpeg"
+                            alt="Amoxicillin"
+                        />
+                        <p>Amoxicillin</p>
+                    </div>
+
+                    <div class="medicine-card">
+                        <img
+                            src="https://images.apollo247.in/pub/media/catalog/product/b/e/ben0006_2.jpg?tr=q-80,f-webp,w-400,dpr-3,c-at_max%20400w"
+                            alt="Cough Syrup"
+                        />
+                        <p>Cough Syrup</p>
+                    </div>
+                </section>
+
+                <!-- Offer Box -->
+                <div class="offer-box">
+                    Limited Offer: 20% off on Antibiotics!
+                </div>
+            </main>
+        </div>
+
+        <footer>
+            <p>
+                Medicine Inventory Management<br />Vedd Vaity(155), Tirth
+                Kotadia(156), Sounabha Majumdar(167)
+            </p>
+        </footer>
+    </body>
 </html>
