@@ -20,20 +20,6 @@ function formvalid(e) {
     alert("email is wrong!");
     return;
   }
-  // deals with roles checking
-  let rolePicked = false;
-
-  for (let r of roles) {
-    if (r.checked) {
-      rolePicked = true;
-      break;
-    }
-  }
-  if (!rolePicked) {
-    alert("you havent picked a role!");
-    return;
-  }
-
   // deals with department checking
   let deptPicked = false;
   for (let d of departments) {
