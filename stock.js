@@ -1,103 +1,100 @@
 document.getElementById("welcome").textContent = "Medicine Inventory Dashboard";
 
-let medicineName = "Paracetamol";
-let unitCost = 30;
-let inStock = true;
-
-document.getElementById("medicineInfo").textContent =
-  medicineName + " | ₹" + unitCost + " | Available: " + inStock;
-
-let quantity = 40;
-let stockValue = unitCost * quantity;
-
-document.getElementById("stockValue").textContent =
-  "Stock Value: ₹" + stockValue;
-
-let reorderMessage;
-
-if (quantity < 20) {
-  reorderMessage = "Reorder Required";
-} else {
-  reorderMessage = "Stock Level OK";
-}
-
-document.getElementById("reorderStatus").textContent = reorderMessage;
-
-let category = "tablet";
-let categoryText = "";
-
-switch (category) {
-  case "tablet":
-    categoryText = "Tablet Section";
-    break;
-  case "syrup":
-    categoryText = "Syrup Section";
-    break;
-  case "injection":
-    categoryText = "Injection Section";
-    break;
-  default:
-    categoryText = "General Medicines";
-}
-
-document.getElementById("categoryDisplay").textContent = categoryText;
-
-let medicines = ["Paracetamol", "Ibuprofen", "Amoxicillin", "Cough Syrup"];
 let list = document.getElementById("medicineList");
-
-for (let i = 0; i < medicines.length; i++) {
-  let li = document.createElement("li");
-  li.textContent = medicines[i];
-  list.appendChild(li);
-}
-
 let selectedMedicines = [];
 
-function selectMedicine(name) {
-  selectedMedicines.push(name);
-  document.getElementById("selectedCount").textContent =
-    "Selected Medicines: " + selectedMedicines.length;
-}
+fetch("fetch.php")
+  .then((response) => response.json())
+  .then((data) => {
+    if (data.length === 0) {
+      document.getElementById("medicineInfo").textContent =
+        "No medicines found";
+      return;
+    }
 
-let searchName = "JavaScript";
-let found = false;
+    let first = data[0];
 
-for (let i = 0; i < medicines.length; i++) {
-  if (medicines[i] === searchName) {
-    found = true;
-    break;
-  }
-}
+    document.getElementById("medicineInfo").textContent =
+      first.name +
+      " | ₹" +
+      first.unit_cost +
+      " | Available: " +
+      (first.in_stock ? "Yes" : "No");
 
-document.getElementById("availability").textContent = found
-  ? "Medicine Available"
-  : "Out of Stock";
+    let stockValue = first.unit_cost * first.quantity;
+    document.getElementById("stockValue").textContent =
+      "Stock Value: ₹" + stockValue;
 
-let batchPrices = [450, 300, 250];
+    document.getElementById("reorderStatus").textContent =
+      first.quantity < 20 ? "Reorder Required" : "Stock Level OK";
 
-function calculateTotalValue() {
-  let sum = 0;
-  for (let i = 0; i < batchPrices.length; i++) {
-    sum += batchPrices[i];
-  }
-  document.getElementById("totalValue").textContent =
-    "Total Inventory Value: ₹" + sum;
-}
+    let categoryText = "";
+    switch (first.category) {
+      case "tablet":
+        categoryText = "Tablet Section";
+        break;
+      case "syrup":
+        categoryText = "Syrup Section";
+        break;
+      case "injection":
+        categoryText = "Injection Section";
+        break;
+      default:
+        categoryText = "General Medicines";
+    }
+    document.getElementById("categoryDisplay").textContent = categoryText;
 
-calculateTotalValue();
+    list.innerHTML = "";
+    let totalValue = 0;
+
+    for (let i = 0; i < data.length; i++) {
+      let li = document.createElement("li");
+      li.textContent =
+        data[i].name +
+        " | ₹" +
+        data[i].unit_cost +
+        " | " +
+        data[i].category +
+        " | Qty: " +
+        data[i].quantity;
+      list.appendChild(li);
+      totalValue += data[i].unit_cost * data[i].quantity;
+    }
+
+    document.getElementById("totalValue").textContent =
+      "Total Inventory Value: ₹" + totalValue;
+    document.getElementById("availability").textContent =
+      "Medicines loaded successfully";
+  });
 
 document.getElementById("selectBtn").addEventListener("click", function () {
-  selectMedicine("Paracetamol");
+  selectedMedicines.push("Paracetamol");
+  document.getElementById("selectedCount").textContent =
+    "Selected Medicines: " + selectedMedicines.length;
   document.getElementById("message").textContent = "Medicine marked for review";
 });
-document.getElementById("searchBox").addEventListener("input", function () {
-  let value = this.value.toLowerCase();
-  let items = list.getElementsByTagName("li");
 
-  for (let i = 0; i < items.length; i++) {
-    let text = items[i].textContent.toLowerCase();
-    items[i].style.display = text.includes(value) ? "list-item" : "none";
-  }
+document.getElementById("searchBox").addEventListener("input", function () {
+  let value = this.value;
+
+  fetch("search.php?query=" + encodeURIComponent(value))
+    .then((response) => response.json())
+    .then((data) => {
+      list.innerHTML = "";
+
+      for (let i = 0; i < data.length; i++) {
+        let li = document.createElement("li");
+        li.textContent =
+          data[i].name +
+          " | ₹" +
+          data[i].unit_cost +
+          " | " +
+          data[i].category +
+          " | Qty: " +
+          data[i].quantity;
+        list.appendChild(li);
+      }
+    });
 });
 
 let cards = document.getElementsByClassName("medicine-card");
