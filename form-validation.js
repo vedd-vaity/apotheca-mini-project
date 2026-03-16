@@ -15,7 +15,7 @@ function formvalid(e) {
     return;
   }
   // tests if email is following an appropriate ppattern
-  const emailPattern = /^[^@]+@[^@]+\.gov$/;
+  const emailPattern = /^[^@]+@[^@]+\.hp$/;
   if (!emailPattern.test(email.value.trim())) {
     alert("email is wrong!");
     return;
