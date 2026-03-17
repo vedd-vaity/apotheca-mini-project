@@ -5,39 +5,60 @@
         <title>User Login</title>
     </head>
     <body>
-        <form>
-            <fieldset>
-                <legend>User Login</legend>
-
-                <label>Full Name:</label>
-                <input
-                    type="text"
-                    required
-                    placeholder="Enter full name"
-                    autofocus
-                /><br /><br />
-
+        <!-- LOGIN -->
+        <fieldset>
+            <legend>Login</legend>
+            <form action="login.php" method="POST">
                 <label>Email:</label>
                 <input
                     type="email"
+                    name="email"
                     required
-                    placeholder="user@hospital.gov"
+                    placeholder="user@hospital.hp"
                 /><br /><br />
 
                 <label>Password:</label>
-                <input type="password" required /><br /><br />
-
-                <label>Role:</label>
-                <input type="radio" name="role" /> Admin
-                <input type="radio" name="role" /> Pharmacist<br /><br />
-
-                <label>Departments:</label>
-                <input type="checkbox" /> Inventory
-                <input type="checkbox" /> Billing<br /><br />
+                <input type="password" name="password" required /><br /><br />
 
                 <input type="submit" value="Login" />
-            </fieldset>
-        </form>
+            </form>
+        </fieldset>
+
+        <br />
+
+        <!-- SIGN UP -->
+        <fieldset>
+            <legend>Sign Up</legend>
+            <form action="register.php" method="POST" id="registerForm">
+                <label>Email:</label>
+                <input
+                    type="email"
+                    name="email"
+                    required
+                    placeholder="user@hospital.hp"
+                /><br /><br />
+
+                <label>Password:</label>
+                <input type="password" name="password" required /><br /><br />
+
+                <label>Role:</label>
+                <input type="radio" name="role" value="admin" required /> Admin
+                <input type="radio" name="role" value="pharmacist" />
+                Pharmacist<br /><br />
+
+                <input type="submit" value="Sign Up" />
+            </form>
+        </fieldset>
+
         <script src="form-validation.js"></script>
+        <script>
+            const params = new URLSearchParams(window.location.search);
+            if (params.get("error")) {
+                alert("Invalid email or password");
+            }
+            if (params.get("registered")) {
+                alert("Account created successfully. Please log in.");
+            }
+        </script>
     </body>
 </html>
