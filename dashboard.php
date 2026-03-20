@@ -19,6 +19,7 @@ if (!isset($_SESSION["user_id"])) {
         <ul class="nav-links">
             <li><a href="dashboard.php" class="active">Dashboard</a></li>
             <li><a href="stock.php">Stock</a></li>
+            <li><a href="stock_update.php">Stock Update</a></li>
             <li><a href="admin.php">Admin</a></li>
             <li><a href="suppliers.php">Suppliers</a></li>
             <li><a href="logout.php" class="text-danger">Logout</a></li>

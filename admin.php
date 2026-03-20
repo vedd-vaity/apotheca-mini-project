@@ -79,6 +79,7 @@ $medResult = mysqli_query($conn, "SELECT m.*, s.name as supplier_name FROM medic
         <ul class="nav-links">
             <li><a href="dashboard.php">Dashboard</a></li>
             <li><a href="stock.php">Stock</a></li>
+            <li><a href="stock_update.php">Stock Update</a></li>
             <li><a href="admin.php" class="active">Admin</a></li>
             <li><a href="suppliers.php">Suppliers</a></li>
             <li><a href="logout.php" class="text-danger">Logout</a></li>
