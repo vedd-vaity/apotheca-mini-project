@@ -143,8 +143,20 @@ $medResult = mysqli_query($conn, "SELECT m.*, s.name as supplier_name FROM medic
             </form>
         </div>
         
-        <div class="search-bar mb-20">
-            <input type="text" id="adminSearchInput" placeholder="Search medicine" class="search-input">
+        <div class="search-bar mb-20" style="display:flex; gap:10px; flex-wrap:wrap;">
+            <input type="text" id="adminSearchInput" placeholder="Search medicine by name..." class="search-input" style="flex:1; min-width:200px;">
+            <select id="adminCategoryFilter" class="table-input" style="width:150px; padding:12px; border-radius:8px; border: 1px solid var(--border);">
+                <option value="">All Categories</option>
+                <option value="tablet">Tablet</option>
+                <option value="syrup">Syrup</option>
+                <option value="injection">Injection</option>
+            </select>
+            <select id="adminSupplierFilter" class="table-input" style="width:150px; padding:12px; border-radius:8px; border: 1px solid var(--border);">
+                <option value="">All Suppliers</option>
+                <?php foreach($suppliers as $s): ?>
+                    <option value="<?= $s['id'] ?>"><?= htmlspecialchars($s['name']) ?></option>
+                <?php endforeach; ?>
+            </select>
         </div>
 
         <div class="card">
@@ -192,6 +204,6 @@ $medResult = mysqli_query($conn, "SELECT m.*, s.name as supplier_name FROM medic
             </div>
         </div>
     </div>
-    <script src="script.js"></script>
+    <script src="script.js?v=<?= time() ?>"></script>
 </body>
 </html>

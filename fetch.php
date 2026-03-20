@@ -65,6 +65,7 @@ if ($recent_result) {
                 "name" => $row["name"],
                 "batch_no" => $row["batch_no"],
                 "qty" => (int)$row["quantity"],
+                "reorder_level" => (int)($row["reorder_level"] ?? 20),
                 "expiry_date" => $row["expiry_date"] ?? "N/A",
                 "status" => $status
             ];

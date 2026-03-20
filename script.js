@@ -25,19 +25,38 @@ document.addEventListener("DOMContentLoaded", function () {
                             const li = document.createElement('li');
                             li.className = 'stock-item';
 
-                            let badgeClass = 'badge-neutral';
-                            if (item.status === 'New Medicine') badgeClass = 'badge-info';
-                            else if (item.status === 'Expired') badgeClass = 'badge-danger';
-                            else if (item.status === 'Low Stock' || item.status === 'Expiring Soon') badgeClass = 'badge-warning';
+                            let extraTags = '';
+                            if (item.status === 'Expired') {
+                                extraTags = `<span class="badge badge-danger">Expired</span>`;
+                            } else {
+                                let today = new Date().toISOString().split('T')[0];
+                                
+                                if (item.qty < item.reorder_level) {
+                                    extraTags += `<span class="badge badge-warning" style="margin-left: 5px;">Qty: ${item.qty} (Low)</span>`;
+                                }
+                                
+                                if (item.expiry_date && item.expiry_date !== "N/A") {
+                                    let expDate = new Date(item.expiry_date);
+                                    let currDate = new Date(today);
+                                    let diffDays = Math.ceil((expDate - currDate) / (1000 * 60 * 60 * 24));
+                                    
+                                    if (diffDays > 0 && diffDays <= 7) {
+                                        let dayText = diffDays === 1 ? "1 day" : `${diffDays} days`;
+                                        extraTags += `<span class="badge badge-warning" style="margin-left: 5px;">Expiring in ${dayText}</span>`;
+                                    }
+                                }
+
+                                if (item.status === 'New Medicine' && extraTags === '') {
+                                    extraTags += `<span class="badge badge-info" style="margin-left: 5px;">New Medicine</span>`;
+                                }
+                            }
 
                             li.innerHTML = `
                                 <div style="flex:1;">
                                     <span class="med-name" style="display:block;">${item.name}</span>
                                     <small style="color:var(--text-muted); font-size: 0.8em;">Batch: ${item.batch_no || '--'}</small>
                                 </div>
-                                <span class="badge ${badgeClass}">${item.status}</span>
-                                <span class="med-price">Exp: ${item.expiry_date}</span>
-                                <span class="badge badge-neutral">Qty: ${item.qty}</span>
+                                ${extraTags}
                             `;
                             recentList.appendChild(li);
                         });
@@ -145,59 +164,76 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-    // 3. Admin Table Search Logic
+    // 3. Admin Table Search & Filter Logic
     const adminSearchInput = document.getElementById('adminSearchInput');
     const adminTableBody = document.getElementById('adminTableBody');
+    const adminCategoryFilter = document.getElementById('adminCategoryFilter');
+    const adminSupplierFilter = document.getElementById('adminSupplierFilter');
 
-    if (adminSearchInput && adminTableBody) {
-        adminSearchInput.addEventListener('input', function (e) {
-            let url = 'search.php?query=' + encodeURIComponent(e.target.value);
-            fetch(url)
-                .then(res => res.json())
-                .then(data => {
-                    adminTableBody.innerHTML = '';
-                    if (data.length === 0) {
-                        adminTableBody.innerHTML = '<tr><td colspan="9" class="text-center">No medicines found.</td></tr>';
-                        return;
+    if (adminTableBody) {
+        // Initial load
+        loadAdminTable();
+
+        function wrapAdminLoad() {
+            let q = adminSearchInput ? adminSearchInput.value : '';
+            let cat = adminCategoryFilter ? adminCategoryFilter.value : '';
+            let sup = adminSupplierFilter ? adminSupplierFilter.value : '';
+            loadAdminTable(q, cat, sup);
+        }
+
+        if (adminSearchInput) adminSearchInput.addEventListener('input', wrapAdminLoad);
+        if (adminCategoryFilter) adminCategoryFilter.addEventListener('change', wrapAdminLoad);
+        if (adminSupplierFilter) adminSupplierFilter.addEventListener('change', wrapAdminLoad);
+    }
+
+    function loadAdminTable(query = "", category = "", supplier = "") {
+        let url = `search.php?query=${encodeURIComponent(query)}&category=${encodeURIComponent(category)}&supplier=${encodeURIComponent(supplier)}`;
+
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                adminTableBody.innerHTML = '';
+                if (data.length === 0) {
+                    adminTableBody.innerHTML = '<tr><td colspan="9" class="text-center">No medicines found.</td></tr>';
+                    return;
+                }
+
+                const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+                data.forEach(med => {
+                    let cat = med.category ? med.category.charAt(0).toUpperCase() + med.category.slice(1) : '';
+
+                    let exp = '--';
+                    if (med.expiry_date) {
+                        let parts = med.expiry_date.split('-');
+                        if (parts.length === 3) exp = `${months[parseInt(parts[1]) - 1]} ${parts[2]}, ${parts[0]}`;
                     }
 
-                    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-                    data.forEach(med => {
-                        let cat = med.category ? med.category.charAt(0).toUpperCase() + med.category.slice(1) : '';
-
-                        let exp = '--';
-                        if (med.expiry_date) {
-                            let parts = med.expiry_date.split('-');
-                            if (parts.length === 3) exp = `${months[parseInt(parts[1]) - 1]} ${parts[2]}, ${parts[0]}`;
-                        }
-
-                        let row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${med.id}</td>
-                            <td>${med.name}</td>
-                            <td>${med.batch_no || '--'}</td>
-                            <td><span class="badge badge-info">${cat}</span></td>
-                            <td>${med.quantity}</td>
-                            <td>${med.reorder_level || 20}</td>
-                            <td>${exp}</td>
-                            <td>${med.supplier_name || '--'}</td>
-                            <td class="action-cell">
-                                <form action="admin.php" method="POST" onsubmit="return confirm('Delete this medicine?');" style="margin:0;">
-                                    <input type="hidden" name="action" value="delete">
-                                    <input type="hidden" name="id" value="${med.id}">
-                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                                </form>
-                            </td>
-                        `;
-                        adminTableBody.appendChild(row);
-                    });
-                })
-                .catch(err => {
-                    console.error("Admin search failed", err);
-                    adminTableBody.innerHTML = '<tr><td colspan="9" class="text-center text-danger">Error loading inventory.</td></tr>';
+                    let row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${med.id}</td>
+                        <td>${med.name}</td>
+                        <td>${med.batch_no || '--'}</td>
+                        <td><span class="badge badge-info">${cat}</span></td>
+                        <td>${med.quantity}</td>
+                        <td>${med.reorder_level || 20}</td>
+                        <td>${exp}</td>
+                        <td>${med.supplier_name || '--'}</td>
+                        <td class="action-cell">
+                            <form action="admin.php" method="POST" onsubmit="return confirm('Delete this medicine?');" style="margin:0;">
+                                <input type="hidden" name="action" value="delete">
+                                <input type="hidden" name="id" value="${med.id}">
+                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    `;
+                    adminTableBody.appendChild(row);
                 });
-        });
+            })
+            .catch(err => {
+                console.error("Admin search/filter failed", err);
+                adminTableBody.innerHTML = '<tr><td colspan="9" class="text-center text-danger">Error loading inventory.</td></tr>';
+            });
     }
 
 });

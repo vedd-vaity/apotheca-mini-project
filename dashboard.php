@@ -60,6 +60,6 @@ if (!isset($_SESSION["user_id"])) {
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=<?= time() ?>"></script>
 </body>
 </html>
