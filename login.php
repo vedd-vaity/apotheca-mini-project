@@ -12,7 +12,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = mysqli_real_escape_string($conn, $_POST["email"]);
     $password = mysqli_real_escape_string($conn, $_POST["password"]);
 
-    // The requirements say plain text match, no roles
     $sql = "SELECT id FROM users WHERE email='$email' AND password='$password' AND is_active=1";
     $result = mysqli_query($conn, $sql);
 
@@ -21,7 +20,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION["user_id"] = $user["id"];
         header("Location: dashboard.php");
         exit();
-    } else {
+    }
+    else {
         $error = "Invalid email or password.";
     }
 }
@@ -39,7 +39,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h2>Apotheca</h2>
         <p>Medicine Inventory System</p>
         
-        <?php if ($error) echo "<div class='alert alert-danger'>$error</div>"; ?>
+        <?php if ($error)
+    echo "<div class='alert alert-danger'>$error</div>"; ?>
 
         <form action="login.php" method="POST">
             <div class="form-group">
