@@ -5,9 +5,12 @@ if (!isset($_SESSION["user_id"])) {
     exit();
 }
 include "db.php";
-$suppResult = mysqli_query($conn, "SELECT id, name FROM suppliers ORDER BY name ASC");
+$suppResult = mysqli_query(
+    $conn,
+    "SELECT id, name FROM suppliers ORDER BY name ASC",
+);
 $suppliers = [];
-if($suppResult) {
+if ($suppResult) {
     while ($s = mysqli_fetch_assoc($suppResult)) {
         $suppliers[] = $s;
     }
@@ -51,8 +54,10 @@ if($suppResult) {
             </select>
             <select id="supplierFilter" class="table-input" style="width:150px; padding:12px; border-radius:8px; border: 1px solid var(--border);">
                 <option value="">All Suppliers</option>
-                <?php foreach($suppliers as $s): ?>
-                    <option value="<?= $s['id'] ?>"><?= htmlspecialchars($s['name']) ?></option>
+                <?php foreach ($suppliers as $s): ?>
+                    <option value="<?= $s["id"] ?>"><?= htmlspecialchars(
+    $s["name"],
+) ?></option>
                 <?php endforeach; ?>
             </select>
             <select id="categoryFilter" class="table-input" style="width:150px; padding:12px; border-radius:8px; border: 1px solid var(--border);">
