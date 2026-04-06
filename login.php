@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             setcookie(
                 "remember_user",
                 $user["id"],
-                time() + 60 * 60 * 24 * 30,
+                time() + 60 * 60 * 24 * 1,
                 "/",
             );
         }
