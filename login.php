@@ -37,7 +37,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         header("Location: dashboard.php");
         exit();
-    } else {
+    }
+    else {
         $error = "Invalid email or password.";
     }
 }
@@ -54,10 +55,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="login-card">
         <h2>Apotheca</h2>
         <p>Medicine Inventory System</p>
+<<<<<<< HEAD
 
         <?php if ($error) {
             echo "<div class='alert alert-danger'>$error</div>";
         } ?>
+=======
+        
+        <?php if ($error)
+    echo "<div class='alert alert-danger'>$error</div>"; ?>
+>>>>>>> c29f4d328b0177c862f051d0a999f2fda9917e31
 
         <form action="login.php" method="POST">
             <div class="form-group">
