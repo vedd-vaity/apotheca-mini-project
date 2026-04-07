@@ -16,12 +16,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $category = mysqli_real_escape_string($conn, $_POST["category"]);
         $batch_no = mysqli_real_escape_string($conn, $_POST["batch_no"]);
         $quantity = (int)$_POST["quantity"];
-        $reorder_level = (int)$_POST["reorder_level"];
         $expiry_date = trim($_POST["expiry_date"]) ? "'".$_POST["expiry_date"]."'" : "NULL";
         $supplier_id = !empty($_POST["supplier_id"]) ? (int)$_POST["supplier_id"] : "NULL";
         
-        $sql = "INSERT INTO medicines (name, category, batch_no, quantity, reorder_level, expiry_date, supplier_id) 
-                VALUES ('$name', '$category', '$batch_no', $quantity, $reorder_level, $expiry_date, $supplier_id)";
+        $sql = "INSERT INTO medicines (name, category, batch_no, quantity, expiry_date, supplier_id) 
+                VALUES ('$name', '$category', '$batch_no', $quantity, $expiry_date, $supplier_id)";
                 
         if (mysqli_query($conn, $sql)) {
             $new_id = mysqli_insert_id($conn);
@@ -121,10 +120,6 @@ $medResult = mysqli_query($conn, "SELECT m.*, s.name as supplier_name FROM medic
                         <input type="number" name="quantity" value="0" required>
                     </div>
                     <div class="form-group">
-                        <label>Reorder Level</label>
-                        <input type="number" name="reorder_level" value="20" required>
-                    </div>
-                    <div class="form-group">
                         <label>Expiry Date</label>
                         <input type="date" name="expiry_date">
                     </div>
@@ -171,7 +166,6 @@ $medResult = mysqli_query($conn, "SELECT m.*, s.name as supplier_name FROM medic
                             <th>Batch</th>
                             <th>Category</th>
                             <th>Qty</th>
-                            <th>Reorder Lvl</th>
                             <th>Expiry</th>
                             <th>Supplier</th>
                             <th>Actions</th>
@@ -185,7 +179,6 @@ $medResult = mysqli_query($conn, "SELECT m.*, s.name as supplier_name FROM medic
                             <td><?= htmlspecialchars($row['batch_no'] ?? '--') ?></td>
                             <td><span class="badge badge-info"><?= ucfirst(htmlspecialchars($row['category'] ?? '')) ?></span></td>
                             <td><?= $row['quantity'] ?></td>
-                            <td><?= $row['reorder_level'] ?? 20 ?></td>
                             <td><?= $row['expiry_date'] ? date('M d, Y', strtotime($row['expiry_date'])) : '--' ?></td>
                             <td><?= htmlspecialchars($row['supplier_name'] ?? '--') ?></td>
                             <td class="action-cell">

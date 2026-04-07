@@ -21,7 +21,7 @@ $whereClause = implode(" AND ", $where);
 $sql = "SELECT m.*, s.name as supplier_name,
             CASE 
                 WHEN m.expiry_date IS NOT NULL AND m.expiry_date < CURDATE() THEN 1
-                WHEN m.quantity < COALESCE(m.reorder_level, 20) THEN 2
+                WHEN m.quantity < 20 THEN 2
                 WHEN m.expiry_date IS NOT NULL AND m.expiry_date <= DATE_ADD(CURDATE(), INTERVAL 7 DAY) THEN 3
                 WHEN m.created_at IS NOT NULL AND m.created_at >= DATE_SUB(CURDATE(), INTERVAL 2 DAY) THEN 4
                 ELSE 5

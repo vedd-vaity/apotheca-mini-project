@@ -23,6 +23,9 @@ body {
     background-color: var(--bg-color);
     color: var(--text-main);
     line-height: 1.5;
+    background-image: url('background_body.jpg');
+    background-repeat: repeat;
+    background-size: 100px 100px;
 }
 
 /* Typography */

@@ -28,7 +28,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     $medicines[] = $row;
     $stats["total"]++;
 
-    if ((int)$row["quantity"] < (int)($row["reorder_level"] ?? 20)) {
+    if ((int)$row["quantity"] < 20) {
         $stats["low"]++;
     }
 
@@ -50,7 +50,7 @@ if ($recent_result) {
         if ($row["expiry_date"] && $row["expiry_date"] < $today) {
             $status = "Expired";
         }
-        elseif ((int)$row["quantity"] < (int)($row["reorder_level"] ?? 20)) {
+        elseif ((int)$row["quantity"] < 20) {
             $status = "Low Stock";
         }
         elseif ($row["expiry_date"] && $row["expiry_date"] <= $next_7_days) {
@@ -65,7 +65,6 @@ if ($recent_result) {
                 "name" => $row["name"],
                 "batch_no" => $row["batch_no"],
                 "qty" => (int)$row["quantity"],
-                "reorder_level" => (int)($row["reorder_level"] ?? 20),
                 "expiry_date" => $row["expiry_date"] ?? "N/A",
                 "status" => $status
             ];

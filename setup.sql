@@ -22,7 +22,6 @@ CREATE TABLE IF NOT EXISTS medicines (
     category    VARCHAR(50) NOT NULL,
     batch_no    VARCHAR(50) NOT NULL,
     quantity    INT DEFAULT 0,
-    reorder_level INT DEFAULT 20,
     expiry_date DATE,
     supplier_id INT,
     created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -46,11 +45,11 @@ INSERT INTO suppliers (name, email, phone, address) VALUES
 ('MedLife Distributors', 'info@medlife.com', '9123456789', 'Delhi, India');
 
 -- Sample medicines
-INSERT INTO medicines (name, category, batch_no, quantity, reorder_level, expiry_date, supplier_id) VALUES
-('Paracetamol 500mg', 'tablet', 'B-1001', 100, 20, '2027-06-15', 1),
-('Amoxicillin 250mg', 'tablet', 'B-1002', 8, 15, '2026-02-10', 1),
-('Benadryl Cough Syrup', 'syrup', 'C-2001', 45, 20, '2027-12-01', 2),
-('Insulin Injection', 'injection', 'I-3001', 3, 5, '2026-08-20', 2);
+INSERT INTO medicines (name, category, batch_no, quantity, expiry_date, supplier_id) VALUES
+('Paracetamol 500mg', 'tablet', 'B-1001', 100, '2027-06-15', 1),
+('Amoxicillin 250mg', 'tablet', 'B-1002', 8, '2026-02-10', 1),
+('Benadryl Cough Syrup', 'syrup', 'C-2001', 45, '2027-12-01', 2),
+('Insulin Injection', 'injection', 'I-3001', 3, '2026-08-20', 2);
 
 -- Sample stock logs for initial data
 INSERT INTO stock_logs (medicine_id, change_qty, action, date) VALUES

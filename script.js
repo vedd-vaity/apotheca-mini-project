@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             } else {
                                 let today = new Date().toISOString().split('T')[0];
                                 
-                                if (item.qty < item.reorder_level) {
+                                if (item.qty < 20) {
                                     extraTags += `<span class="badge badge-warning" style="margin-left: 5px;">Qty: ${item.qty} (Low)</span>`;
                                 }
                                 
@@ -114,10 +114,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     li.className = 'stock-item';
 
                     // Determine Badges
-                    let reorderLevel = parseInt(med.reorder_level) || 20;
                     let quantity = parseInt(med.quantity) || 0;
 
-                    let qtyBadge = quantity < reorderLevel
+                    let qtyBadge = quantity < 20
                         ? `<span class="badge badge-warning">Qty: ${quantity} (Low)</span>`
                         : `<span class="badge badge-success">Qty: ${quantity}</span>`;
 
@@ -194,7 +193,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(data => {
                 adminTableBody.innerHTML = '';
                 if (data.length === 0) {
-                    adminTableBody.innerHTML = '<tr><td colspan="9" class="text-center">No medicines found.</td></tr>';
+                    adminTableBody.innerHTML = '<tr><td colspan="8" class="text-center">No medicines found.</td></tr>';
                     return;
                 }
 
@@ -216,7 +215,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         <td>${med.batch_no || '--'}</td>
                         <td><span class="badge badge-info">${cat}</span></td>
                         <td>${med.quantity}</td>
-                        <td>${med.reorder_level || 20}</td>
                         <td>${exp}</td>
                         <td>${med.supplier_name || '--'}</td>
                         <td class="action-cell">

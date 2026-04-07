@@ -62,6 +62,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label><input type="checkbox" name="remember"> Remember me</label>
             </div>
             <button type="submit" class="btn btn-primary">Login</button>
+            <div style="margin-top: 20px; text-align: center; font-size: 0.9rem;">
+                <p>Don't have an account? <a href="register.php" style="color: var(--primary); font-weight: 500; text-decoration: none;">Register here</a></p>
+            </div>
         </form>
     </div>
 </body>
