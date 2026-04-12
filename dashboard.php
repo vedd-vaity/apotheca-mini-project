@@ -52,8 +52,8 @@ if (!isset($_SESSION["user_id"])) {
         </div>
 
         <div class="mt-20">
-            <h3>Recent Changes</h3>
-            <div class="card mt-10">
+            <div class="card mt-10" style="margin-top: 25px;">
+                <h3>Recent Changes</h3>
                 <ul class="stock-list" id="recentChangesList">
                     <li class="stock-item loading">Loading recent changes...</li>
                 </ul>
