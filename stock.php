@@ -22,7 +22,7 @@ if ($suppResult) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stock - Apotheca</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=<?= time() ?>">
 </head>
 <body>
     <nav class="navbar">
@@ -43,16 +43,16 @@ if ($suppResult) {
             <p>Live search and medicine status.</p>
         </div>
 
-        <div class="search-bar mb-20" style="display:flex; gap:10px; flex-wrap:wrap;">
-            <input type="text" id="searchInput" placeholder="Search medicines by name..." class="search-input" style="flex:1; min-width:200px;">
-            <select id="tagFilter" class="table-input" style="width:150px; padding:12px; border-radius:8px; border: 1px solid var(--border);">
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search medicines by name..." class="search-input" style="flex:1;">
+            <select id="tagFilter" class="table-input" style="width:150px;">
                 <option value="">All Tags</option>
                 <option value="Expired">Expired</option>
                 <option value="Low">Low Stock</option>
                 <option value="Expiring">Expiring Soon</option>
                 <option value="New">New Medicine</option>
             </select>
-            <select id="supplierFilter" class="table-input" style="width:150px; padding:12px; border-radius:8px; border: 1px solid var(--border);">
+            <select id="supplierFilter" class="table-input" style="width:150px;">
                 <option value="">All Suppliers</option>
                 <?php foreach ($suppliers as $s): ?>
                     <option value="<?= $s["id"] ?>"><?= htmlspecialchars(
@@ -60,7 +60,7 @@ if ($suppResult) {
 ) ?></option>
                 <?php endforeach; ?>
             </select>
-            <select id="categoryFilter" class="table-input" style="width:150px; padding:12px; border-radius:8px; border: 1px solid var(--border);">
+            <select id="categoryFilter" class="table-input" style="width:150px;">
                 <option value="">All Categories</option>
                 <option value="tablet">Tablet</option>
                 <option value="syrup">Syrup</option>
