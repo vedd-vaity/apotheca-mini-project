@@ -318,7 +318,7 @@ table {
 th,
 td {
     padding: 12px 15px;
-    stuff text-align: left;
+    text-align: left;
     border-bottom: 1px solid var(--border);
 }
 
