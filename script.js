@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // 1. Dashboard Logic
     const dashContainer = document.querySelector('.stats-grid');
     if (dashContainer) {
-        fetch('fetch.php')
+        fetch('fetch.php?v=' + Date.now())
             .then(res => res.json())
             .then(data => {
                 const stats = data.stats;
@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function loadStock(query = "", tag = "", supplier = "", category = "") {
-        let url = `search.php?query=${encodeURIComponent(query)}&tag=${encodeURIComponent(tag)}&supplier=${encodeURIComponent(supplier)}&category=${encodeURIComponent(category)}`;
+        let url = `search.php?query=${encodeURIComponent(query)}&tag=${encodeURIComponent(tag)}&supplier=${encodeURIComponent(supplier)}&category=${encodeURIComponent(category)}&_=${Date.now()}`;
 
         fetch(url)
             .then(res => res.json())
@@ -186,7 +186,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function loadAdminTable(query = "", category = "", supplier = "") {
-        let url = `search.php?query=${encodeURIComponent(query)}&category=${encodeURIComponent(category)}&supplier=${encodeURIComponent(supplier)}`;
+        let url = `search.php?query=${encodeURIComponent(query)}&category=${encodeURIComponent(category)}&supplier=${encodeURIComponent(supplier)}&_=${Date.now()}`;
 
         fetch(url)
             .then(res => res.json())

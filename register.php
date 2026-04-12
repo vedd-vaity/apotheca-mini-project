@@ -10,10 +10,10 @@ $success = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = mysqli_real_escape_string($conn, $_POST["email"]);
-    $password = mysqli_real_escape_string($conn, $_POST["password"]);
-    $confirm_password = mysqli_real_escape_string($conn, $_POST["confirm_password"]);
+    $password_raw = $_POST["password"];
+    $confirm_password = $_POST["confirm_password"];
 
-    if ($password !== $confirm_password) {
+    if ($password_raw !== $confirm_password) {
         $error = "Passwords do not match.";
     } else {
         // Check if email already exists
@@ -22,7 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (mysqli_num_rows($check_result) > 0) {
             $error = "Email already registered.";
         } else {
-            $sql = "INSERT INTO users (email, password, is_active) VALUES ('$email', '$password', 1)";
+            $hashed_password = password_hash($password_raw, PASSWORD_DEFAULT);
+            $sql = "INSERT INTO users (email, password, is_active) VALUES ('$email', '$hashed_password', 1)";
             if (mysqli_query($conn, $sql)) {
                 $success = "Registration successful! You can now <a href='login.php'>login</a>.";
             } else {
@@ -38,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - Apotheca</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=<?= time() ?>">
 </head>
 <body class="login-body">
     <div class="login-card">

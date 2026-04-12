@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS stock_logs (
 
 -- Default login user
 INSERT INTO users (email, password, is_active)
-VALUES ('apotheca@gov.in', '12345', 1);
+VALUES ('apotheca@gov.in', '$2y$12$rpMXCLuRCKuXlnvXqFOm5.AwIUM77U67ZYp8MiyXW5avqL2OIFbf.', 1);
 
 -- Sample suppliers
 INSERT INTO suppliers (name, email, phone, address) VALUES
