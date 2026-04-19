@@ -49,6 +49,7 @@ $result = mysqli_query($conn, "SELECT * FROM suppliers ORDER BY name ASC");
             <li><a href="stock_update.php">Stock Update</a></li>
             <li><a href="admin.php">Admin</a></li>
             <li><a href="suppliers.php" class="active">Suppliers</a></li>
+            <li><a href="about.php">About Us</a></li>
             <li><a href="logout.php" class="text-danger">Logout</a></li>
         </ul>
     </nav>
