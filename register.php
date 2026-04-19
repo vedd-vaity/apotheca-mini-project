@@ -38,20 +38,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Hash password securely
             $hashed_password = password_hash($password_raw, PASSWORD_DEFAULT);
-<<<<<<< HEAD
+            // Hash password securely
+            $hashed_password = password_hash($password_raw, PASSWORD_DEFAULT);
+
             // Determine role: Admin (1) if email starts with 'admin', otherwise Pharmacist (2)
             $role = (preg_match('/^admin/i', $email)) ? 1 : 2;
 
             // Insert new user with determined role
             $sql = "INSERT INTO users (email, password, role, is_active) 
                     VALUES ('$email', '$hashed_password', $role, 1)";
-=======
-
-            // Insert new user
-            $sql = "INSERT INTO users (email, password, is_active) 
-                    VALUES ('$email', '$hashed_password', 1)";
-
->>>>>>> 07abd109756d9000d37e6f9c3c6638a4b0eaace0
             if (mysqli_query($conn, $sql)) {
                 $success = "Registration successful! You can now <a href='login.php'>login</a>.";
             } else {

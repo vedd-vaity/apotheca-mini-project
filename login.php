@@ -22,14 +22,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Sanitize input
     $email = mysqli_real_escape_string($conn, $_POST["email"]);
     $password_raw = $_POST["password"];
-<<<<<<< HEAD
-    // Fetch user data with role ID
-    $sql = "SELECT id, password, role FROM users WHERE email='$email' AND is_active=1";
-=======
 
-    // Fetch user data
-    $sql = "SELECT id, password FROM users WHERE email='$email' AND is_active=1";
->>>>>>> 07abd109756d9000d37e6f9c3c6638a4b0eaace0
+    // Fetch user data including role
+    $sql = "SELECT id, password, role FROM users WHERE email='$email' AND is_active=1";
     $result = mysqli_query($conn, $sql);
 
     if ($result && mysqli_num_rows($result) === 1) {
@@ -41,10 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Set session
             $_SESSION["user_id"] = $user["id"];
-<<<<<<< HEAD
             $_SESSION["role"] = (int)$user["role"] ?? 2;
-=======
->>>>>>> 07abd109756d9000d37e6f9c3c6638a4b0eaace0
 
             // Set remember me cookie
             if (isset($_POST["remember"])) {
