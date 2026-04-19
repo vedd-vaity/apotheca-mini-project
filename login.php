@@ -14,12 +14,16 @@ $error = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = mysqli_real_escape_string($conn, $_POST["email"]);
     $password_raw = $_POST["password"];
-    $sql = "SELECT id, password FROM users WHERE email='$email' AND is_active=1";
+    // Fetch user data with role ID
+    $sql = "SELECT id, password, role FROM users WHERE email='$email' AND is_active=1";
     $result = mysqli_query($conn, $sql);
     if ($result && mysqli_num_rows($result) === 1) {
         $user = mysqli_fetch_assoc($result);
         if (password_verify($password_raw, $user["password"])) {
             $_SESSION["user_id"] = $user["id"];
+            $_SESSION["role"] = (int)$user["role"] ?? 2;
+
+            // Set remember me cookie
             if (isset($_POST["remember"])) {
                 setcookie(
                     "remember_user",

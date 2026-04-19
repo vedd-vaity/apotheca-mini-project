@@ -2,10 +2,11 @@ CREATE DATABASE IF NOT EXISTS medicine_inventory;
 USE medicine_inventory;
 
 CREATE TABLE IF NOT EXISTS users (
-    id        INT AUTO_INCREMENT PRIMARY KEY,
-    email     VARCHAR(100) NOT NULL,
-    password  VARCHAR(100) NOT NULL,
-    is_active INT DEFAULT 1
+    id          INT AUTO_INCREMENT PRIMARY KEY,
+    email       VARCHAR(100) NOT NULL,
+    password    VARCHAR(100) NOT NULL,
+    role        INT DEFAULT 2,
+    is_active   INT DEFAULT 1
 );
 
 CREATE TABLE IF NOT EXISTS suppliers (
@@ -36,8 +37,8 @@ CREATE TABLE IF NOT EXISTS stock_logs (
 );
 
 -- Default login user
-INSERT INTO users (email, password, is_active)
-VALUES ('apotheca@gov.in', '$2y$12$rpMXCLuRCKuXlnvXqFOm5.AwIUM77U67ZYp8MiyXW5avqL2OIFbf.', 1);
+INSERT INTO users (email, password, role, is_active)
+VALUES ('apotheca@gov.in', '$2y$12$rpMXCLuRCKuXlnvXqFOm5.AwIUM77U67ZYp8MiyXW5avqL2OIFbf.', 1, 1);
 
 -- Sample suppliers
 INSERT INTO suppliers (name, email, phone, address) VALUES

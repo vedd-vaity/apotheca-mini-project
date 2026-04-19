@@ -23,7 +23,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $error = "Email already registered.";
         } else {
             $hashed_password = password_hash($password_raw, PASSWORD_DEFAULT);
-            $sql = "INSERT INTO users (email, password, is_active) VALUES ('$email', '$hashed_password', 1)";
+            // Determine role: Admin (1) if email starts with 'admin', otherwise Pharmacist (2)
+            $role = (preg_match('/^admin/i', $email)) ? 1 : 2;
+
+            // Insert new user with determined role
+            $sql = "INSERT INTO users (email, password, role, is_active) 
+                    VALUES ('$email', '$hashed_password', $role, 1)";
             if (mysqli_query($conn, $sql)) {
                 $success = "Registration successful! You can now <a href='login.php'>login</a>.";
             } else {
