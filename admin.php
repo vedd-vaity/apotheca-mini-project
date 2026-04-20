@@ -4,6 +4,11 @@ if (!isset($_SESSION["user_id"])) {
     header("Location: login.php");
     exit();
 }
+// Restrict to Admin only (Role 1)
+if (!isset($_SESSION["role"]) || $_SESSION["role"] != 1) {
+    header("Location: dashboard.php");
+    exit();
+}
 include "db.php";
 
 $msg = "";

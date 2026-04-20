@@ -62,7 +62,9 @@ if($medsResult){
             <li><a href="dashboard.php">Dashboard</a></li>
             <li><a href="stock.php">Stock</a></li>
             <li><a href="stock_update.php" class="active">Stock Update</a></li>
-            <li><a href="admin.php">Admin</a></li>
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 1): ?>
+                <li><a href="admin.php">Admin</a></li>
+            <?php endif; ?>
             <li><a href="suppliers.php">Suppliers</a></li>
             <li><a href="about.php">About Us</a></li>
             <li><a href="logout.php" class="text-danger">Logout</a></li>

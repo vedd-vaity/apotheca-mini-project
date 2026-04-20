@@ -1,6 +1,8 @@
 :root {
-    --primary: #4F46E5;
-    --primary-hover: #4338CA;
+    --primary: #14B8A6;
+    /* Teal */
+    --primary-hover: #0D9488;
+    --navy: #1E3A8A;
     --danger: #EF4444;
     --danger-hover: #DC2626;
     --warning: #F59E0B;
@@ -8,7 +10,9 @@
     --bg-color: #F8FAFC;
     --surface: #FFFFFF;
     --text-main: #0F172A;
-    --text-muted: #64748B;
+    /* Deep Navy Neutral */
+    --text-muted: #475569;
+    /* Slightly cooler muted text */
     --border: #E2E8F0;
 }
 
@@ -21,11 +25,12 @@
 
 body {
     background-color: var(--bg-color);
+    background-image: linear-gradient(rgba(248, 250, 252, 0.7), rgba(248, 250, 252, 0.7)), url('background_image.png');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
     color: var(--text-main);
     line-height: 1.5;
-    background-image: url('background_body.jpg');
-    background-repeat: repeat;
-    background-size: 400px 400px;
 }
 
 /* Typography */
@@ -33,7 +38,7 @@ h1,
 h2,
 h3 {
     font-weight: 600;
-    color: var(--text-main);
+    color: var(--navy);
 }
 
 .text-danger {
@@ -79,7 +84,7 @@ h3 {
 .brand {
     font-size: 1.2rem;
     font-weight: 700;
-    color: var(--primary);
+    color: var(--navy);
 }
 
 .nav-links {
@@ -104,7 +109,8 @@ h3 {
 
 .nav-links a.active {
     color: var(--primary);
-    background-color: #EEF2FF;
+    background-color: #F0FDFA;
+    /* Light Teal */
 }
 
 /* Login specific */
@@ -119,14 +125,17 @@ h3 {
     background: var(--surface);
     padding: 40px;
     border-radius: 12px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 25px -5px rgba(30, 58, 138, 0.1);
+    /* Navy-tinted shadow */
     width: 100%;
     max-width: 400px;
     text-align: center;
+    border: 1px solid rgba(20, 184, 166, 0.2);
+    /* Soft Teal border */
 }
 
 .login-card h2 {
-    color: var(--primary);
+    color: var(--navy);
     margin-bottom: 5px;
 }
 
@@ -140,18 +149,19 @@ h3 {
     background: var(--surface);
     border-radius: 12px;
     padding: 25px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border);
 }
 
 .header-section {
     margin-bottom: 30px;
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     padding: 20px 30px;
     border-radius: 16px;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.4);
     width: fit-content;
 }
 
@@ -175,8 +185,10 @@ h3 {
     background: var(--surface);
     padding: 20px;
     border-radius: 12px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
     border: 1px solid var(--border);
+    border-left: 4px solid var(--primary);
+    /* Teal Accent */
 }
 
 .stat-card h3 {
@@ -188,6 +200,7 @@ h3 {
 .stat-value {
     font-size: 1.8rem;
     font-weight: 700;
+    color: var(--navy);
 }
 
 /* Forms */
@@ -222,7 +235,7 @@ input:focus,
 select:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1);
 }
 
 .btn {
@@ -323,11 +336,12 @@ td {
 }
 
 th {
-    background-color: #F1F5F9;
+    background-color: #F8FAFC;
     font-weight: 600;
-    color: var(--text-muted);
+    color: var(--navy);
     font-size: 0.85rem;
     text-transform: uppercase;
+    border-bottom: 2px solid var(--primary);
 }
 
 tr:hover {
